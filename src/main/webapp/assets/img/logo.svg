@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 64" width="260" height="64" role="img" aria-label="PalaniMart">
+  <title>PalaniMart</title>
+  <defs>
+    <clipPath id="pm-tile"><rect width="64" height="64" rx="16"/></clipPath>
+  </defs>
+  <g clip-path="url(#pm-tile)">
+    <rect width="64" height="64" fill="#0B5D57"/>
+    <path d="M0 64L8 53l8 11z" fill="#E3A82B"/>
+    <path d="M16 64l8-11 8 11z" fill="#B3165B"/>
+    <path d="M32 64l8-11 8 11z" fill="#E3A82B"/>
+    <path d="M48 64l8-11 8 11z" fill="#B3165B"/>
+  </g>
+  <g fill="none" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" transform="translate(-1.2 -5)">
+    <path d="M22.5 19V47"/>
+    <path d="M22.5 19H34a10 10 0 0 1 0 20H22.5"/>
+  </g>
+  <circle cx="31.8" cy="24" r="3.4" fill="#E3A82B"/>
+  <!-- Wordmark (uses Baloo Thambi 2 when installed, rounded system fonts otherwise) -->
+  <text x="78" y="43" font-family="'Baloo Thambi 2','Baloo 2','Nunito','Trebuchet MS',ui-rounded,sans-serif" font-size="36" font-weight="700" letter-spacing="-0.5">
+    <tspan fill="#06332F">Palani</tspan><tspan fill="#B3165B">Mart</tspan>
+  </text>
+</svg>

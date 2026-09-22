@@ -1,0 +1,202 @@
+/* ==========================================================================
+   PalaniMart - Design System
+   Peacock silk, rani pink and zari gold.
+   Global tokens, reset, typography and base accessibility.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@500;600;700;800&family=Hind+Madurai:wght@400;500;600;700&display=swap');
+
+:root {
+    /* Palette: peacock green, rani pink and zari gold, on a cool jasmine white */
+    --color-primary: #0b5d57;
+    --color-primary-hover: #084b46;
+    --color-primary-deep: #06332f;
+    --color-primary-light: #e6f2f0;
+
+    --color-accent: #b3165b;
+    --color-accent-hover: #8d0f47;
+    --color-accent-soft: #fcedf3;
+    --color-accent-border: #f0bfd3;
+
+    --color-zari: #e3a82b;
+    --color-zari-hover: #f0ba4a;
+    --color-zari-soft: #fbf1d9;
+    --color-zari-border: #efd58f;
+    --color-zari-ink: #6b4a00;
+
+    --color-indigo: #2f2b75;
+
+    /* Neutrals & surfaces */
+    --bg-canvas: #f5f8f7;
+    --bg-surface: #ffffff;
+    --bg-subtle: #ebf1ef;
+    --border-subtle: #dce6e3;
+    --border-medium: #c3d2ce;
+    --border-strong: #8fa6a1;
+    --border-focus: #0b5d57;
+
+    /* Text */
+    --text-primary: #10201e;
+    --text-secondary: #3d514d;
+    --text-muted: #62746f;
+    --text-inverse: #ffffff;
+
+    /* Status tones */
+    --success-text: #065f46;
+    --success-bg: #ecfdf5;
+    --success-border: #a7f3d0;
+
+    --danger-text: #991b1b;
+    --danger-bg: #fef2f2;
+    --danger-border: #fecaca;
+
+    --warning-text: #92400e;
+    --warning-bg: #fffbeb;
+    --warning-border: #fde68a;
+
+    --info-text: #1e40af;
+    --info-bg: #eff6ff;
+    --info-border: #bfdbfe;
+
+    /* Type: Baloo Thambi 2 for display, Hind Madurai for text.
+       Both carry Tamil script, so Tamil copy sits in the same voice. */
+    --font-display: "Baloo Thambi 2", "Baloo 2", "Nunito", ui-rounded, "Trebuchet MS", "Segoe UI", sans-serif;
+    --font-serif: var(--font-display); /* legacy token name, kept for older markup */
+    --font-sans: "Hind Madurai", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+    /* Radii: small controls, medium cards, large feature blocks */
+    --radius-xs: 4px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+    --radius-pill: 9999px;
+
+    /* Shadows: borders do most of the work, shadows are green-tinted and rare */
+    --shadow-xs: 0 1px 2px rgba(6, 51, 47, 0.06);
+    --shadow-sm: 0 1px 3px rgba(6, 51, 47, 0.08);
+    --shadow-md: 0 6px 16px rgba(6, 51, 47, 0.08);
+    --shadow-lg: 0 16px 36px rgba(6, 51, 47, 0.14);
+    --shadow-card: none;
+    --shadow-card-hover: 0 10px 24px rgba(6, 51, 47, 0.10);
+
+    /* Spacing (8pt rhythm) */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+
+    --transition-fast: 0.15s ease-out;
+    --transition-base: 0.2s ease-out;
+
+    /* The korvai: a temple-border band of zari and rani triangles.
+       It is the one signature motif and is reused on the header, hero and footer. */
+    --korvai: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='14' viewBox='0 0 32 14'%3E%3Crect width='32' height='14' fill='%2306332f'/%3E%3Cpath d='M0 14L8 3l8 11z' fill='%23e3a82b'/%3E%3Cpath d='M16 14l8-11 8 11z' fill='%23b3165b'/%3E%3C/svg%3E");
+
+    /* Kolam dots: a quiet grid of pulli for dark surfaces */
+    --pulli: radial-gradient(rgba(255, 255, 255, 0.14) 1.6px, transparent 1.8px);
+}
+
+/* Reset & base */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--color-primary-deep);
+    line-height: 1.2;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 1.875rem; }
+h3 { font-size: 1.375rem; }
+h4 { font-size: 1.125rem; }
+h5 { font-size: 1rem; font-family: var(--font-sans); font-weight: 700; }
+
+p {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-3);
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: var(--color-accent);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: inherit;
+    color: inherit;
+}
+
+/* Accessibility */
+:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* The korvai band, usable anywhere as a standalone divider */
+.korvai {
+    height: 14px;
+    background: var(--korvai) repeat-x left center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
