@@ -53,8 +53,10 @@
 <!-- Global Component Containers -->
 <div id="toast-container" aria-live="polite"></div>
 <div id="confirm-modal" class="modal-backdrop" role="dialog" aria-modal="true"></div>
-<div id="global-loader"></div>
+<!-- AI Shopping Assistant Chatbot Widget -->
+<jsp:include page="chatbot.jsp" />
 
 <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/chatbot.js"></script>
 </body>
 </html>

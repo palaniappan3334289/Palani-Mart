@@ -7,7 +7,7 @@
 <section class="hero-section">
     <div class="container hero-grid">
         <div>
-            <div class="hero-tag">வணக்கம்! Welcome to PalaniMart</div>
+            <div class="hero-tag">Welcome to PalaniMart</div>
             <h1 class="hero-headline">Good things from sellers you can trust</h1>
             <p class="hero-subhead">
                 Electronics, books, clothing and home essentials from verified sellers, with secure checkout and easy 7-day returns.

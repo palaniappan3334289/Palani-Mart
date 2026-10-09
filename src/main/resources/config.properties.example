@@ -1,6 +1,6 @@
 # PalaniMart Database & App Configuration Template
 db.driver=org.h2.Driver
-db.url=jdbc:h2:mem:palanimart;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+db.url=jdbc:h2:file:./data/palanimart;DB_CLOSE_DELAY=-1;MODE=PostgreSQL;AUTO_SERVER=TRUE
 db.user=sa
 db.password=
 db.pool.maxSize=10
@@ -9,4 +9,10 @@ db.pool.idleTimeout=300000
 db.pool.connectionTimeout=20000
 db.pool.maxLifetime=1800000
 app.session.timeout=30
-ai.chatbot.provider=mock
+
+# AI Shopping Assistant Configuration
+# Provider: 'gemini' for live Google Gemini AI, or 'mock' for catalog-grounded engine
+ai.chatbot.provider=gemini
+gemini.api.key=
+gemini.model=gemini-3.8-flash
+

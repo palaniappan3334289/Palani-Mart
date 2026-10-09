@@ -1,5 +1,8 @@
 package com.palani.palanimart.controller;
 
+import com.palani.palanimart.dto.ChatRequestDTO;
+import com.palani.palanimart.dto.ChatResponseDTO;
+import com.palani.palanimart.dto.ProductDTO;
 import com.palani.palanimart.dto.UserResponseDTO;
 import com.palani.palanimart.service.ChatService;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,8 +21,11 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.math.BigDecimal;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
@@ -47,6 +53,7 @@ class ChatServletTest {
         servlet = new ChatServlet(chatService);
         responseWriter = new StringWriter();
         when(response.getWriter()).thenReturn(new PrintWriter(responseWriter));
+        when(request.getRemoteAddr()).thenReturn("127.0.0.1");
     }
 
     @Test
@@ -83,5 +90,73 @@ class ChatServletTest {
         String jsonOutput = responseWriter.toString();
         assertTrue(jsonOutput.contains("\"success\":false"));
         assertTrue(jsonOutput.contains("EMPTY_MESSAGE"));
+    }
+
+    @Test
+    @DisplayName("POST /api/chat with message > 1000 chars returns 400 validation error")
+    void testChatLongMessageReturns400() throws Exception {
+        when(request.getSession(false)).thenReturn(null);
+        String longMsg = "x".repeat(1005);
+        String json = "{\"message\":\"" + longMsg + "\"}";
+        when(request.getReader()).thenReturn(new BufferedReader(new StringReader(json)));
+
+        servlet.doPost(request, response);
+
+        verify(response).setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        String jsonOutput = responseWriter.toString();
+        assertTrue(jsonOutput.contains("\"success\":false"));
+        assertTrue(jsonOutput.contains("MESSAGE_TOO_LONG"));
+    }
+
+    @Test
+    @DisplayName("POST /api/chat with rich products and suggestions returns structured JSON envelope")
+    void testChatWithRichResponse() throws Exception {
+        when(request.getSession(false)).thenReturn(session);
+        UserResponseDTO user = new UserResponseDTO();
+        user.setId(5L);
+        when(session.getAttribute("currentUser")).thenReturn(user);
+
+        ProductDTO p = new ProductDTO(1L, 2L, "Mechanical Keyboard", "RGB Gaming", new BigDecimal("89.99"), 10, "Electronics", "https://img.jpg");
+        ChatResponseDTO richResp = new ChatResponseDTO("Found 1 product", Collections.singletonList(p), Collections.singletonList("Compare items"));
+
+        when(chatService.chat(any(ChatRequestDTO.class), eq(5L))).thenReturn(richResp);
+
+        String json = "{\"message\":\"Show me keyboards\"}";
+        when(request.getReader()).thenReturn(new BufferedReader(new StringReader(json)));
+
+        servlet.doPost(request, response);
+
+        verify(response).setStatus(HttpServletResponse.SC_OK);
+        String jsonOutput = responseWriter.toString();
+        assertTrue(jsonOutput.contains("\"success\":true"));
+        assertTrue(jsonOutput.contains("Mechanical Keyboard"));
+        assertTrue(jsonOutput.contains("Compare items"));
+    }
+
+    @Test
+    @DisplayName("POST /api/chat rate limit triggers 429 when client sends excessive requests")
+    void testChatRateLimiting() throws Exception {
+        when(request.getRemoteAddr()).thenReturn("192.168.1.99");
+        when(request.getSession(false)).thenReturn(null);
+
+        String json = "{\"message\":\"Hi\"}";
+        when(chatService.processMessage(anyString(), any())).thenReturn("Hello");
+
+        // Send 31 requests from same IP
+        for (int i = 0; i < 30; i++) {
+            when(request.getReader()).thenReturn(new BufferedReader(new StringReader(json)));
+            servlet.doPost(request, response);
+        }
+
+        // 31st request should be rate-limited
+        StringWriter rateLimitedWriter = new StringWriter();
+        when(response.getWriter()).thenReturn(new PrintWriter(rateLimitedWriter));
+        when(request.getReader()).thenReturn(new BufferedReader(new StringReader(json)));
+
+        servlet.doPost(request, response);
+
+        verify(response, atLeastOnce()).setStatus(429);
+        String jsonOutput = rateLimitedWriter.toString();
+        assertTrue(jsonOutput.contains("TOO_MANY_REQUESTS"));
     }
 }

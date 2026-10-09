@@ -1,0 +1,19 @@
+# ==============================================================================
+# PalaniMart - Render.com 100% Free Tier Cloud Blueprint
+# Free 24/7 web service with automated HTTPS and zero server maintenance
+# ==============================================================================
+
+services:
+  - type: web
+    name: palanimart
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: Dockerfile
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: GEMINI_MODEL
+        value: gemini-1.5-flash
+      - key: GEMINI_API_KEY
+        sync: false

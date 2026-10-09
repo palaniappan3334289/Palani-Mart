@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/components.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/layout.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/chatbot.css">
 </head>
 <body>
 

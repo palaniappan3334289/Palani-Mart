@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.io.File;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -38,7 +39,26 @@ public class AppContextListener implements ServletContextListener {
 
             String jdbcUrl = System.getenv("JDBC_URL");
             if (jdbcUrl == null || jdbcUrl.trim().isEmpty()) {
-                jdbcUrl = props.getProperty("db.url", "jdbc:h2:mem:palanimart;DB_CLOSE_DELAY=-1;MODE=PostgreSQL");
+                jdbcUrl = props.getProperty("db.url", "jdbc:h2:file:./data/palanimart;DB_CLOSE_DELAY=-1;MODE=PostgreSQL;AUTO_SERVER=TRUE");
+            }
+
+            // Ensure directory exists for file-based H2 database
+            if (jdbcUrl.startsWith("jdbc:h2:file:")) {
+                try {
+                    String rawPath = jdbcUrl.substring("jdbc:h2:file:".length());
+                    int semi = rawPath.indexOf(';');
+                    if (semi != -1) {
+                        rawPath = rawPath.substring(0, semi);
+                    }
+                    File dbFile = new File(rawPath);
+                    File parentDir = dbFile.getParentFile();
+                    if (parentDir != null && !parentDir.exists()) {
+                        parentDir.mkdirs();
+                        logger.info("Created missing H2 database directory: {}", parentDir.getAbsolutePath());
+                    }
+                } catch (Exception e) {
+                    logger.warn("Could not pre-create H2 database directory", e);
+                }
             }
 
             String jdbcUser = System.getenv("JDBC_USER");

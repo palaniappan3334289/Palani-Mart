@@ -56,10 +56,7 @@
 
     --info-text: #1e40af;
     --info-bg: #eff6ff;
-    --info-border: #bfdbfe;
-
-    /* Type: Baloo Thambi 2 for display, Hind Madurai for text.
-       Both carry Tamil script, so Tamil copy sits in the same voice. */
+    /* Typography tokens */
     --font-display: "Baloo Thambi 2", "Baloo 2", "Nunito", ui-rounded, "Trebuchet MS", "Segoe UI", sans-serif;
     --font-serif: var(--font-display); /* legacy token name, kept for older markup */
     --font-sans: "Hind Madurai", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;

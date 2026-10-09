@@ -62,7 +62,8 @@ public class CsrfFilter implements Filter {
         // Validate CSRF on state-changing requests (except login/register and h2-console)
         if (!SAFE_METHODS.contains(method.toUpperCase())) {
             boolean isExemptEndpoint = uri.endsWith("/login") || uri.endsWith("/register")
-                    || uri.contains("/api/v1/auth/") || uri.contains("/h2-console");
+                    || uri.contains("/api/v1/auth/") || uri.contains("/h2-console")
+                    || uri.contains("/api/chat") || uri.contains("/api/v1/chat");
             if (!isExemptEndpoint) {
                 String reqToken = httpRequest.getHeader(CSRF_HEADER_NAME);
                 if (reqToken == null || reqToken.trim().isEmpty()) {
